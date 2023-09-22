@@ -1,0 +1,122 @@
+package com.selenium01;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class SeleniumDemo {
+
+	public static void main(String[] args) throws InterruptedException, IOException {
+		
+		
+		FirefoxDriver driver = new FirefoxDriver();
+		
+		/*
+	//		 Automate email and password field and Login to gmail account:
+	 
+			driver.get("http://www.gmail.com");
+			driver.findElement(By.id("identifierId")).sendKeys("selauto2802@gmail.com");
+			driver.findElement(By.className("nCP5yc")).click();
+			
+			Thread.sleep(1500);
+			
+			driver.findElement(By.className("whsOnd")).sendKeys("1gandhiji");
+			driver.findElement(By.className("nCP5yc")).click();
+		 
+	//		  Launching Chrome Browser:
+	  
+			System.setProperty("webdriver.chrome.driver", "F:\\chromedriver_win32\\chromedriver.exe");
+			ChromeDriver cDriver = new ChromeDriver();
+			cDriver.get("http://www.gmail.com");
+		
+//			  Partial xpath:
+			
+	        driver.get("http://www.gmail.com");
+	        driver.findElement(By.xpath("//*[@id='Email']")).sendKeys("selauto2802"); 
+		
+		
+//		      Automating drop-down:
+ 
+		driver.get("http://www.airindia.com");
+		Select select = new Select(driver.findElement(By.xpath("//*[@id='concessionaryType1']")));
+//		select.selectByIndex(6);
+		select.selectByValue("Student");
+		
+		
+//			Handling Multiple Windows:
+		driver.get("http://www.monster.com");
+		Set<String> windowHandles = driver.getWindowHandles();
+		Object[] windowArray = windowHandles.toArray();
+		driver.switchTo().window((String) windowArray[0]);
+		driver.close();
+		*/
+//			Handling Excel file:
+		        // Part-1:
+		
+		ArrayList arrayList = new ArrayList();
+		         
+		FileInputStream file = new FileInputStream("C:\\Users\\user\\Desktop\\Pankaj_Java_Testing\\ComposeEmailSuits.xlsx");
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet("01"); 
+		        // Part-2:
+		Iterator<Row> rowIterator = sheet.iterator();
+		while(rowIterator.hasNext()) {
+			Row row = rowIterator.next();
+			Iterator<Cell> cellIterator = row.cellIterator();
+			while(cellIterator.hasNext()) {
+				Cell cell = cellIterator.next();
+				// Part-3:
+				switch (cell.getCellType()) {
+					case STRING:
+						arrayList.add(cell.getStringCellValue());
+						break;
+					case NUMERIC:
+						arrayList.add(cell.getNumericCellValue());
+						break;
+					case BOOLEAN:
+						arrayList.add(cell.getBooleanCellValue());
+						break;
+				}
+			}
+		
+		}
+		
+		// Getting Heading from Excel:
+//		for(int i=0; i < arrayList.size(); i++) {
+//			if(arrayList.get(i).equals("Sl. No")) {
+//				System.out.println(arrayList.get(i));
+//				System.out.println(arrayList.get(i+1));
+//				System.out.println(arrayList.get(i+2));
+//				System.out.println(arrayList.get(i+3));
+//				System.out.println(arrayList.get(i+4));
+//				System.out.println(arrayList.get(i+5));
+//				System.out.println(arrayList.get(i+6));
+//			}
+//		}
+		
+		// Getting Heading from Excel:
+		for(int i=0; i < arrayList.size(); i++) {
+			if(arrayList.get(i).equals(3.0)) {
+				System.out.println(arrayList.get(i));
+				System.out.println(arrayList.get(i+1));
+				System.out.println(arrayList.get(i+2));
+				System.out.println(arrayList.get(i+3));
+			}
+		}
+		
+		
+	}
+
+}
